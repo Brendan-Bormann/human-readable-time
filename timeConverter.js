@@ -68,22 +68,28 @@ function formatDuration(totalSeconds) {
     words(minutes, formatArray);
     words(seconds, formatArray);
 
-    // This block is hard coded to format the response with the correct commas and 'and's
-    if (formatArray.length === 1) {
-        response = formatArray[0];
-    } else if (formatArray.length === 2) {
-        response = formatArray[0] + " and " + formatArray[1];
-    } else if (formatArray.length === 3) {
-        response = formatArray[0] + ", " + formatArray[1] + " and " + formatArray[2];
-    } else if (formatArray.length === 4) {
-        response = formatArray[0] + ", " + formatArray[1] + ", " + formatArray[2] + " and " + formatArray[3];
-    } else if (formatArray.length === 5) {
-        response = formatArray[0] + ", " + formatArray[1] + ", " + formatArray[2] + ", " + formatArray[3] + " and " + formatArray[4];
-    }
+    // This block is to format the response with the correct commas and 'and's
+    response = concatTime(formatArray[0], formatArray[1], formatArray[2], formatArray[3], formatArray[4]);
 
-    console.log(" ├ " + response.trim());
+    console.log(" ├ " + response);
     console.log(" │");
-    return (response.trim());
+    return response;
+}
+
+function concatTime(a, b, c, d, e) {
+    var concattedTime = '';
+    if (a && b && c && d && e) {
+        concattedTime = a + ", " + b + ", " + c + ", " + d + " and " + e;
+    } else if (a && b && c && d) {
+        concattedTime = a + ", " + b + ", " + c + " and " + d;
+    } else if (a && b && c) {
+        concattedTime = a + ", " + b + " and " + c;
+    } else if (a && b) {
+        concattedTime = a + " and " + b;
+    } else if (a) {
+        concattedTime = a;
+    }
+    return concattedTime.trim();
 }
 
 // Simple function to find if we need a plural
